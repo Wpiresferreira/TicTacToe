@@ -6,7 +6,7 @@ namespace ConnectFour
     {
         public static string[,] board = new string[6, 7];
         private static bool hasWinnerOrTie = false;
-        private static string turn = "O";
+        
 
         public static void InitializeGameBoard()
         {
@@ -44,18 +44,18 @@ namespace ConnectFour
         {
             return "";
         }
-        private static void ChangeTurn()
-        {
-            if (turn == "O")
-            {
-                turn = "X";
-            }
-            else
-            {
-                turn = "O";
-            }
+        //private static void ChangeTurn()
+        //{
+        //    if (turn == "O")
+        //    {
+        //        turn = "X";
+        //    }
+        //    else
+        //    {
+        //        turn = "O";
+        //    }
 
-        }
+        //}
         
         public static void Start()
         {
@@ -66,13 +66,13 @@ namespace ConnectFour
             {
                 Console.Clear();
                 //DisplayGameBoard();
-                Play(turn);
+                //Play(turn);
                 winner = CheckWinner();
                 if (winner != "")
                 {
                     break;
                 }
-                ChangeTurn();
+                //ChangeTurn();
             }
         }
         public static void Play(string turn)
@@ -103,7 +103,7 @@ namespace ConnectFour
             {
                 if (ncommand >= 1 && ncommand <= 7)
                 {
-                    PutAPiece(ncommand, turn);
+                    //PutAPiece(ncommand, turn);
                 }
             }
             return ncommand;

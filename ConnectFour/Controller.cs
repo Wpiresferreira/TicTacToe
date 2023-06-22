@@ -4,11 +4,12 @@ namespace ConnectFour
 {
     public static class Controller
     {
+        public static string turn = "O";
         public static void Start(Player playerOne, Player playerTwo )
         {
             GameBoard.InitializeGameBoard();
             Screen.DisplayGameBoard(playerOne, playerTwo);
-        }
+    }
 
         public static void TwoPlayersGame() {
             Console.WriteLine("Let's start a game with 2 Players");

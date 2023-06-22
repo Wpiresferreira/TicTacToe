@@ -66,7 +66,9 @@ namespace ConnectFour
                     Console.WriteLine("***          +---+---+---+---+---+---+---+               ***");
                     row = "";
                 }
-                    Console.WriteLine($"************************************************************");
+            Console.WriteLine($"***                                                      ***");
+            Console.WriteLine($"***                                                      ***");
+            Console.WriteLine($"************************************************************");
 
             
         }
