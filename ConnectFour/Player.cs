@@ -12,6 +12,11 @@ namespace ConnectFour
      
         }
 
+        public virtual void PutAPiece(Player playerOne, Player playerTwo)
+        {
+
+        }
+
     }
 
 
@@ -37,6 +42,12 @@ public class HumanPlayer : Player
         public override string ToString()
         {
             return playerName;
+        }
+
+        public override void PutAPiece(Player playerOne, Player playerTwo)
+        {
+            int columnchosenColumn = Controller.ValidColumn(playerOne,playerTwo);
+            Controller.PutAPiece(columnchosenColumn, Controller.turn);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ConnectFour
         public static string Message = "";
         public static string Message2 = "";
         public static bool isEndOfGame = false;
-
+        public static Player actualPlayer;
         public static List<string> validsColumns = new List<string>(){"1", "2", "3", "4", "5", "6", "7"};
 
         private static void SortFirstPlayer(Player playerOne, Player playerTwo)
@@ -24,10 +24,12 @@ namespace ConnectFour
                 case 1:
                     turn = "X";
                     Message = $" Player {playerOne.playerName} will start! Choose a Column";
+                    actualPlayer = playerOne;
                     break;
                 case 2:
                     turn = "O";
                     Message = $" Player {playerTwo.playerName} will start! Choose a Column";
+                    actualPlayer = playerTwo;
                     break;
 
             }
@@ -36,36 +38,133 @@ namespace ConnectFour
         }
         public static void Start(Player playerOne, Player playerTwo )
         {
-            GameBoard.InitializeGameBoard();
             SortFirstPlayer(playerOne, playerTwo);
+
+            while (true)
+            {
+                GameBoard.InitializeGameBoard();
+                validsColumns.Clear();
+                validsColumns.Add("1");
+                validsColumns.Add("2");
+                validsColumns.Add("3");
+                validsColumns.Add("4");
+                validsColumns.Add("5");
+                validsColumns.Add("6");
+                validsColumns.Add("7");
+                Message2 = "";
+                Screen.DisplayGameBoard(playerOne, playerTwo);
+
+            while(true)
+            {
+                UpdateValidsColumns();
+                Screen.DisplayGameBoard(playerOne, playerTwo);
+                actualPlayer.PutAPiece(playerOne, playerTwo);
+                Screen.DisplayGameBoard(playerOne, playerTwo);
+                if (CheckWinner(playerOne, playerTwo)) break;
+                ChangeTurn(playerOne, playerTwo);
+                Message = $"It's {actualPlayer.playerName} turn. Choose a column number:";
+                Screen.DisplayGameBoard(playerOne, playerTwo);
+
+
+            }
+            if(Continue(playerOne, playerTwo))
+                {
+                    ChangeTurn(playerOne, playerTwo);
+                    Message2 = "";
+                    Screen.DisplayGameBoard(playerOne, playerTwo);
+
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            Console.ReadKey();
+
+        }
+
+        private static void UpdateValidsColumns()
+        {
+            for (int col =0; col<7; col++)
+            {
+                if (GameBoard.board[0,col] != " ")
+                {
+                    validsColumns.Remove((col+1).ToString());
+                }
+            }
+        }
+
+        private static bool Continue(Player playerOne, Player playerTwo)
+        {
+            Message2 = "Do you want continue playing? (Y/N)";
             Screen.DisplayGameBoard(playerOne, playerTwo);
 
-            while(!isEndOfGame)
+            while (true)
             {
-                int columnchosenColumn = ValidColumn(playerOne, playerTwo);
-                PutAPiece(columnchosenColumn, turn);
-                Screen.DisplayGameBoard(playerOne, playerTwo);
-                ChangeTurn();
-                Message = $"It's {ActualPlayer(playerOne, playerTwo)} turn. Choose a column number:";
-                Screen.DisplayGameBoard(playerOne, playerTwo);
+                string answer = Console.ReadKey().KeyChar.ToString().ToLower();
 
-
+                switch(answer)
+                {
+                    case "y":
+                        return true;
+                    case "n":
+                        Message = "Thanks for playing!";
+                        Message2 = "";
+                        Screen.DisplayGameBoard(playerOne, playerTwo);
+                        return false;
+                    default:
+                        Message = "Invalid comand. Please type \"Y\" or \"N\"";
+                        Message2 = "";
+                        Screen.DisplayGameBoard(playerOne, playerTwo);
+                        break;
+                }
             }
+            
+
         }
 
-        private static string ActualPlayer(Player playerOne, Player playerTwo)
+        private static bool CheckWinner(Player playerOne, Player playerTwo)
         {
-            if (turn == "X")
+            string[] sRow = new string[6];
+            for (int row = 0; row <6; row++)
             {
-                return playerOne.playerName;
+                for(int col = 0; col < 7; col++)
+                {
+                    sRow[row] += GameBoard.board[row, col];
+
+                }
+                if (sRow[row].Contains("XXXX"))
+                {
+                    Message = $"Congratulations {playerOne.playerName}. YOU WIN ! ! !";
+                    playerOne.score++;
+                    Screen.DisplayGameBoard(playerOne, playerTwo);
+                    return true;
+                }else if (sRow[row].Contains("OOOO"))
+                {
+                    Message = $"Congratulations {playerTwo.playerName}. YOU WIN ! ! !";
+                    playerTwo.score++;
+                    Screen.DisplayGameBoard(playerOne, playerTwo);
+                    return true;
+                }
+                
             }
-            else
-            {
-                return playerTwo.playerName;
-            }
+                return false;
         }
 
-        private static int ValidColumn(Player playerOne, Player playerTwo)
+        //private static Player ActualPlayer()
+        //{
+        //    if (turn == "X")
+        //    {
+        //        return playerOne;
+        //    }
+        //    else
+        //    {
+        //        return playerTwo;
+        //    }
+        //}
+
+        public static int ValidColumn(Player playerOne, Player playerTwo)
         {   
             while(true) {
                 string userCommand = Console.ReadKey().KeyChar.ToString();
@@ -82,7 +181,7 @@ namespace ConnectFour
             }
         }
 
-        private static void PutAPiece(int n, string turn)
+        public static void PutAPiece(int n, string turn)
         {
             for (int i = 5; i >= 0; i--)
             {
@@ -94,13 +193,24 @@ namespace ConnectFour
             }
         }
 
-        private static void ChangeTurn()
+        private static void ChangeTurn(Player playerOne, Player playerTwo)
         {
             if (turn == "O")
             {
+                actualPlayer = playerOne;
                 turn = "X";
+                Message = $"It's {actualPlayer.playerName} turn. Choose a column number:";
+                Screen.DisplayGameBoard(playerOne, playerTwo);
+
             }
-            else {  turn = "O"; }
+            else
+            {
+                actualPlayer = playerTwo;
+                turn = "O";
+                Message = $"It's {actualPlayer.playerName} turn. Choose a column number:";
+                Screen.DisplayGameBoard(playerOne, playerTwo);
+
+            }
         }
 
         public static void TwoPlayersGame() {

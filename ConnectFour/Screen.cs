@@ -56,6 +56,10 @@ namespace ConnectFour
                     Console.BackgroundColor = ConsoleColor.DarkBlue;
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     break;
+                case " ":
+                    Console.Write(" ");
+                    break;
+
             }
         }
 
@@ -86,13 +90,13 @@ namespace ConnectFour
                         Console.WriteLine("███              1   2   3   4   5   6   7               ███");
                         Console.WriteLine("███            ╔═══╦═══╦═══╦═══╦═══╦═══╦═══╗             ███");
                     }
-                    row = "███            ║ ";
+                    Console.Write("███            ║ ");
                     for (int j = 0; j < 7; j++)
                     {
-                        row += GameBoard.board[i, j] + " ║ ";
+                    Token(GameBoard.board[i, j]);
+                    Console.Write(" ║ ");
                     }
-                    row += "            ███";
-                    Console.WriteLine(row);
+                    Console.Write("            ███\n");
                 if (i != 5)
                 {
                     Console.WriteLine("███            ╠═══╬═══╬═══╬═══╬═══╬═══╬═══╣             ███");
