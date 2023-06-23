@@ -29,7 +29,7 @@ public class HumanPlayer : Player
         public HumanPlayer(string n)
     
         {
-            Console.WriteLine($"\nType the name of Player {n}:");
+            Console.WriteLine($"\nType the name of Player {n}:\n(max.15 characters)");
             playerName = Console.ReadLine();
     
         }
