@@ -114,8 +114,8 @@ namespace ConnectFour
                         Screen.DisplayGameBoard(playerOne, playerTwo);
                         return false;
                     default:
-                        Message = "Invalid comand. Please type \"Y\" or \"N\"";
-                        Message2 = "";
+                        Message2 = "Invalid comand. Continue? Please type \"Y\" or \"N\"";
+                        //Message = "";
                         Screen.DisplayGameBoard(playerOne, playerTwo);
                         break;
                 }
@@ -149,7 +149,158 @@ namespace ConnectFour
                 }
                 
             }
-                return false;
+
+
+
+
+            string[] sCol = new string[7];
+            for (int col = 0; col < 7; col++)
+            {
+                for (int row = 0; row < 6; row++)
+                {
+                    sCol[col] += GameBoard.board[row, col];
+
+                }
+                if (sCol[col].Contains("XXXX"))
+                {
+                    Message = $"Congratulations {playerOne.playerName}. YOU WIN ! ! !";
+                    playerOne.score++;
+                    Screen.DisplayGameBoard(playerOne, playerTwo);
+                    return true;
+                }
+                else if (sCol[col].Contains("OOOO"))
+                {
+                    Message = $"Congratulations {playerTwo.playerName}. YOU WIN ! ! !";
+                    playerTwo.score++;
+                    Screen.DisplayGameBoard(playerOne, playerTwo);
+                    return true;
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+            string[] sDiag1 = new string[6];
+            sDiag1[0] = GameBoard.board[2, 0] + GameBoard.board[3, 1] + GameBoard.board[4, 2] + GameBoard.board[5, 3];
+            sDiag1[1] = GameBoard.board[1, 0] + GameBoard.board[2, 1] + GameBoard.board[3, 2] + GameBoard.board[4, 3] + GameBoard.board[5, 4];
+            sDiag1[2] = GameBoard.board[0, 0] + GameBoard.board[1, 1] + GameBoard.board[2, 2] + GameBoard.board[3, 3] + GameBoard.board[4, 4] + GameBoard.board[5, 5];
+            sDiag1[3] = GameBoard.board[0, 1] + GameBoard.board[1, 2] + GameBoard.board[2, 3] + GameBoard.board[3, 4] + GameBoard.board[4, 5]+ GameBoard.board[5, 6];
+            sDiag1[4] = GameBoard.board[0, 2] + GameBoard.board[1, 3] + GameBoard.board[2, 4] + GameBoard.board[3, 5]+ GameBoard.board[4,6];
+            sDiag1[5] = GameBoard.board[0, 3] + GameBoard.board[1, 4] + GameBoard.board[2, 5] + GameBoard.board[3, 6];
+
+            for (int diag1 = 0; diag1 < 6; diag1++)
+            {
+                if (sDiag1[diag1].Contains("XXXX"))
+                {
+                    Message = $"Congratulations {playerOne.playerName}. YOU WIN ! ! !";
+                    playerOne.score++;
+                    Screen.DisplayGameBoard(playerOne, playerTwo);
+                    return true;
+                }
+                else if (sDiag1[diag1].Contains("OOOO"))
+                {
+                    Message = $"Congratulations {playerTwo.playerName}. YOU WIN ! ! !";
+                    playerTwo.score++;
+                    Screen.DisplayGameBoard(playerOne, playerTwo);
+                    return true;
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            string[] sDiag2 = new string[6];
+            sDiag2[0] = GameBoard.board[0, 3] + GameBoard.board[1, 2] + GameBoard.board[2, 1] + GameBoard.board[3, 0];
+            sDiag2[1] = GameBoard.board[0, 4] + GameBoard.board[1, 3] + GameBoard.board[2, 2] + GameBoard.board[3, 1] + GameBoard.board[4, 0];
+            sDiag2[2] = GameBoard.board[0, 5] + GameBoard.board[1, 4] + GameBoard.board[2, 3] + GameBoard.board[3, 2] + GameBoard.board[4, 1] + GameBoard.board[5, 0];
+            sDiag2[3] = GameBoard.board[0, 6] + GameBoard.board[1, 5] + GameBoard.board[2, 4] + GameBoard.board[3, 3] + GameBoard.board[4, 2] + GameBoard.board[5, 1];
+            sDiag2[4] = GameBoard.board[1, 6] + GameBoard.board[2, 5] + GameBoard.board[3, 4] + GameBoard.board[4, 3] + GameBoard.board[5, 2];
+            sDiag2[5] = GameBoard.board[2, 6] + GameBoard.board[3, 5] + GameBoard.board[4, 4] + GameBoard.board[5, 3];
+
+            for (int diag2 = 0; diag2 < 6; diag2++)
+            {
+                if (sDiag2[diag2].Contains("XXXX"))
+                {
+                    Message = $"Congratulations {playerOne.playerName}. YOU WIN ! ! !";
+                    playerOne.score++;
+                    Screen.DisplayGameBoard(playerOne, playerTwo);
+                    return true;
+                }
+                else if (sDiag2[diag2].Contains("OOOO"))
+                {
+                    Message = $"Congratulations {playerTwo.playerName}. YOU WIN ! ! !";
+                    playerTwo.score++;
+                    Screen.DisplayGameBoard(playerOne, playerTwo);
+                    return true;
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return false;
         }
 
         //private static Player ActualPlayer()
