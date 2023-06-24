@@ -3,13 +3,19 @@ using System;
 
 namespace ConnectFour
 {
-    public abstract class Player
+
+    interface IPlayer
+    {
+        public void PutAPiece(Player playerOne, Player playerTwo);
+    }
+    public abstract class Player:IPlayer
     {
         public string playerName = "Unknow Player";
         public int score { get; set; } = 0;
 
-        public Player(){
-     
+        public Player()
+        {
+
         }
 
         public virtual void PutAPiece(Player playerOne, Player playerTwo)
@@ -20,23 +26,66 @@ namespace ConnectFour
     }
 
 
-public class ComputerPlayer : Player
-{
-    public ComputerPlayer()
+    public class ComputerPlayer : Player
     {
-        playerName = "ComputerPlayer";
-    }
-}
-
-public class HumanPlayer : Player
-{
-    
-        public HumanPlayer(string n)
-    
+        public Random r = new Random();
+        public ComputerPlayer()
         {
-            Console.WriteLine($"\nType the name of Player {n}:\n(max.15 characters)");
-            playerName = Console.ReadLine();
-    
+            playerName = "ComputerPlayer";
+        }
+        public override void PutAPiece(Player playerOne, Player playerTwo)
+        {
+
+            int chosenColumn = int.Parse(Controller.validsColumns[r.Next(0, Controller.validsColumns.Count)]);
+            Controller.PutAPiece(chosenColumn, Controller.turn);
+        }
+
+        public override string ToString()
+        {
+            return playerName;
+        }
+
+    }
+
+    public class HumanPlayer : Player
+    {
+
+        public HumanPlayer(string n)
+
+        {
+            Screen.TypePlayersScreen($"Type the name of Player {n}:", "(max.15 characters)");
+            do
+            {
+                try
+                {
+                    //playerName = "";
+                    playerName = Console.ReadLine();
+
+                    while(playerName.Contains("  "))
+                    {
+                        playerName = playerName.Replace("  ", " ");
+                    }
+                    playerName = playerName.Trim();
+
+                    if (playerName == "" || playerName.Length>15 || playerName == " ")
+                    {
+                        throw new CheckPlayerNameException("Invalid Name");
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                }
+                catch (CheckPlayerNameException e)
+                {
+
+                    e.InvalidName();
+                }
+                
+            }
+            while (true);
+
         }
 
         public override string ToString()
@@ -46,8 +95,9 @@ public class HumanPlayer : Player
 
         public override void PutAPiece(Player playerOne, Player playerTwo)
         {
-            int columnchosenColumn = Controller.ValidColumn(playerOne,playerTwo);
+            int columnchosenColumn = Controller.ValidColumn(playerOne, playerTwo);
             Controller.PutAPiece(columnchosenColumn, Controller.turn);
+
         }
     }
 }

@@ -11,7 +11,6 @@ namespace ConnectFour
         public static Random r = new Random();
         public static string Message = "";
         public static string Message2 = "";
-        public static bool isEndOfGame = false;
         public static Player actualPlayer;
         public static List<string> validsColumns = new List<string>(){"1", "2", "3", "4", "5", "6", "7"};
 
@@ -126,6 +125,7 @@ namespace ConnectFour
 
         private static bool CheckWinner(Player playerOne, Player playerTwo)
         {
+
             string[] sRow = new string[6];
             for (int row = 0; row <6; row++)
             {
@@ -149,9 +149,6 @@ namespace ConnectFour
                 }
                 
             }
-
-
-
 
             string[] sCol = new string[7];
             for (int col = 0; col < 7; col++)
@@ -177,17 +174,6 @@ namespace ConnectFour
                 }
 
             }
-
-
-
-
-
-
-
-
-
-
-
 
             string[] sDiag1 = new string[6];
             sDiag1[0] = GameBoard.board[2, 0] + GameBoard.board[3, 1] + GameBoard.board[4, 2] + GameBoard.board[5, 3];
@@ -216,32 +202,6 @@ namespace ConnectFour
 
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             string[] sDiag2 = new string[6];
             sDiag2[0] = GameBoard.board[0, 3] + GameBoard.board[1, 2] + GameBoard.board[2, 1] + GameBoard.board[3, 0];
             sDiag2[1] = GameBoard.board[0, 4] + GameBoard.board[1, 3] + GameBoard.board[2, 2] + GameBoard.board[3, 1] + GameBoard.board[4, 0];
@@ -269,54 +229,34 @@ namespace ConnectFour
 
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            if (GameBoard.board[0, 0] != " " && GameBoard.board[0, 1] != " " && GameBoard.board[0, 2] != " " && GameBoard.board[0, 3] != " " && GameBoard.board[0, 4] != " " && GameBoard.board[0, 5] != " " && GameBoard.board[0, 6] != " ")
+            {
+                Message = $"The game ended in a draw";
+                playerOne.score++;
+                playerTwo.score++;
+                Screen.DisplayGameBoard(playerOne, playerTwo);
+                return true;
+            }
 
             return false;
         }
 
-        //private static Player ActualPlayer()
-        //{
-        //    if (turn == "X")
-        //    {
-        //        return playerOne;
-        //    }
-        //    else
-        //    {
-        //        return playerTwo;
-        //    }
-        //}
 
         public static int ValidColumn(Player playerOne, Player playerTwo)
-        {   
+        {
+            if(actualPlayer is ComputerPlayer)
+            {
+                while (true)
+                {
+                    Random r = new Random();
+                    int randomColumn = r.Next(1, 8);
+
+                }
+
+            }
+
+
+
             while(true) {
                 string userCommand = Console.ReadKey().KeyChar.ToString();
                 if (validsColumns.Any(p => p == userCommand)){
@@ -374,8 +314,7 @@ namespace ConnectFour
 
         public static void OnePlayerGame()
         {
-            Console.WriteLine("Let's start a game against Computer");
-
+            Screen.TypePlayersScreen("Let's start a game against Computer","");
             Player playerOne = new HumanPlayer("One");
             Player playerTwo = new ComputerPlayer();
             Controller.Start(playerOne, playerTwo);
@@ -389,19 +328,16 @@ namespace ConnectFour
             switch (option)
             {
                 case "1":
-                    Console.WriteLine("One Player vs Computer");
                     OnePlayerGame();
                     break;
                 case "2":
-                    Console.WriteLine("Two Players Game");
                     TwoPlayersGame();
                     break;
                 case "3":
-                    Console.WriteLine("Help / About the game");
                     Screen.ShowHelp();
                     break;
                 case "4":
-                    Console.WriteLine("\n\nThanks for the game!");
+                    Screen.TypePlayersScreen("Thanks for play!","");
                     Console.ReadKey();
                     break;
                 default:

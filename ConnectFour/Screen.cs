@@ -3,10 +3,12 @@ using System.Net.Http;
 
 namespace ConnectFour
 {
+
     public static class Screen
     {
-        
-        public static void InitialScreen() {
+
+        public static void InitialScreen()
+        {
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -21,7 +23,6 @@ namespace ConnectFour
             Console.WriteLine("███   2 - Two Players Game                               ███");
             Console.WriteLine("███   3 - Help / About the game                          ███");
             Console.WriteLine("███   4 - Exit                                           ███");
-                     
             Console.WriteLine("███                                                      ███");
             Console.WriteLine("████████████████████████████████████████████████████████████");
             Console.WriteLine("████████████████████████████████████████████████████████████");
@@ -29,10 +30,11 @@ namespace ConnectFour
             Console.WriteLine("████████████████████████████████████████████████████████████");
 
             Controller.CheckOption();
-            
+
         }
 
-        public static void DisplayGameBoard( Player playerOne, Player playerTwo) {
+        public static void DisplayGameBoard(Player playerOne, Player playerTwo)
+        {
             Console.Clear();
             Header(playerOne, playerTwo);
             Body();
@@ -40,7 +42,7 @@ namespace ConnectFour
         }
         public static void Token(string token)
         {
-            switch(token)
+            switch (token)
             {
                 case "X":
                     Console.BackgroundColor = ConsoleColor.DarkRed;
@@ -63,7 +65,8 @@ namespace ConnectFour
             }
         }
 
-        public static void Header(Player one, Player two) {
+        public static void Header(Player one, Player two)
+        {
             Console.Clear();
             Console.WriteLine($"████████████████████████████████████████████████████████████");
             Console.WriteLine($"███ {one,-15}                      {two,15} ███");
@@ -79,47 +82,63 @@ namespace ConnectFour
         public static void Body()
         {
             Console.WriteLine($"███                                                      ███");
+            Console.WriteLine($"███{Controller.Message,-52}  ███");
             Console.WriteLine($"███                                                      ███");
-
-
-            string row = "";
-                for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 6; i++)
+            {
+                if (i == 0)
                 {
-                    if (i == 0)
-                    {
-                        Console.WriteLine("███              1   2   3   4   5   6   7               ███");
-                        Console.WriteLine("███            ╔═══╦═══╦═══╦═══╦═══╦═══╦═══╗             ███");
-                    }
-                    Console.Write("███            ║ ");
-                    for (int j = 0; j < 7; j++)
-                    {
+                    Console.WriteLine("███              1   2   3   4   5   6   7               ███");
+                    Console.WriteLine("███            ╔═══╦═══╦═══╦═══╦═══╦═══╦═══╗             ███");
+                }
+                Console.Write("███            ║ ");
+                for (int j = 0; j < 7; j++)
+                {
                     Token(GameBoard.board[i, j]);
                     Console.Write(" ║ ");
-                    }
-                    Console.Write("            ███\n");
+                }
+                Console.Write("            ███\n");
                 if (i != 5)
                 {
                     Console.WriteLine("███            ╠═══╬═══╬═══╬═══╬═══╬═══╬═══╣             ███");
                 }
                 else
                 {
-                Console.WriteLine("███            ╚═══╩═══╩═══╩═══╩═══╩═══╩═══╝             ███");
+                    Console.WriteLine("███            ╚═══╩═══╩═══╩═══╩═══╩═══╩═══╝             ███");
                 }
-                row = "";
-                }
+            }
             Console.WriteLine($"███                                                      ███");
         }
 
         public static void Bottom()
         {
             Console.WriteLine($"███                                                      ███");
-            Console.WriteLine($"███{Controller.Message,-52}  ███");
             Console.WriteLine($"███{Controller.Message2,-52}  ███");
+            Console.WriteLine($"███                                                      ███");
             Console.WriteLine($"████████████████████████████████████████████████████████████");
 
         }
 
-        public static void ShowHelp()
+        public static void TypePlayersScreen(string msg, string msg2)
+        {
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("████████████████████████████████████████████████████████████");
+            Console.WriteLine("███                                                      ███");
+            Console.WriteLine("███             Welcome to Connect Four Game             ███");
+            Console.WriteLine("███                                                      ███");
+            Console.WriteLine("████████████████████████████████████████████████████████████");
+            Console.WriteLine("███                                                      ███");
+            Console.WriteLine($"███  {msg, -52}███");
+            Console.WriteLine($"███  {msg2,-52}███");
+            Console.WriteLine("███                                                      ███");
+            Console.WriteLine("████████████████████████████████████████████████████████████");
+            Console.WriteLine("████████████████████████████████████████████████████████████");
+            
+        }
+            
+            public static void ShowHelp()
         {
             Console.Clear();
             Console.WriteLine("████████████████████████████████████████████████████████████");
