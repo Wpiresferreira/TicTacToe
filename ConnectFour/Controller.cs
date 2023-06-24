@@ -11,36 +11,16 @@ namespace ConnectFour
         public static Random r = new Random();
         public static string Message = "";
         public static string Message2 = "";
+        public static Player starterPlayer;
         public static Player actualPlayer;
         public static List<string> validsColumns = new List<string>(){"1", "2", "3", "4", "5", "6", "7"};
 
-        private static void SortFirstPlayer(Player playerOne, Player playerTwo)
-        {
-           int x = r.Next(1, 3);
-
-            switch (x)
-            {
-                case 1:
-                    turn = "X";
-                    Message = $" Player {playerOne.playerName} will start! Choose a Column";
-                    actualPlayer = playerOne;
-                    break;
-                case 2:
-                    turn = "O";
-                    Message = $" Player {playerTwo.playerName} will start! Choose a Column";
-                    actualPlayer = playerTwo;
-                    break;
-
-            }
-
-
-        }
         public static void Start(Player playerOne, Player playerTwo )
         {
-            SortFirstPlayer(playerOne, playerTwo);
 
             while (true)
             {
+                SortFirstPlayer(playerOne, playerTwo);
                 GameBoard.InitializeGameBoard();
                 validsColumns.Clear();
                 validsColumns.Add("1");
@@ -80,6 +60,43 @@ namespace ConnectFour
                 }
             }
             Console.ReadKey();
+
+        }
+
+        private static void SortFirstPlayer(Player playerOne, Player playerTwo)
+        {
+            if (starterPlayer is null)
+            {
+                int x = r.Next(1, 3);
+
+                switch (x)
+                {
+                    case 1:
+                        turn = "X";
+                        Message = $" Player {playerOne.playerName} will start! Choose a Column";
+                        starterPlayer = actualPlayer = playerOne;
+                        break;
+                    case 2:
+                        turn = "O";
+                        Message = $" Player {playerTwo.playerName} will start! Choose a Column";
+                        starterPlayer = actualPlayer = playerTwo;
+                        break;
+                }
+
+            }
+            else if (starterPlayer == playerOne)
+            {
+                turn = "O";
+                Message = $" Player {playerTwo.playerName} will start! Choose a Column";
+                starterPlayer = actualPlayer = playerTwo;
+
+            }
+            else
+            {
+                turn = "X";
+                Message = $" Player {playerOne.playerName} will start! Choose a Column";
+                starterPlayer = actualPlayer = playerOne;
+            }
 
         }
 
