@@ -7,7 +7,7 @@ namespace ConnectFour
     {
         static void Main(string[] args)
         {
-            Screen.InitialScreen(); 
+            Controller.Initialize(); 
         }
     }
 }

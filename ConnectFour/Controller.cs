@@ -15,6 +15,11 @@ namespace ConnectFour
         public static Player actualPlayer;
         public static List<string> validsColumns = new List<string>(){"1", "2", "3", "4", "5", "6", "7"};
 
+        public static void Initialize()
+        {
+            Screen.InitialScreen();
+        }
+
         public static void Start(Player playerOne, Player playerTwo )
         {
 
@@ -48,7 +53,6 @@ namespace ConnectFour
             }
             if(Continue(playerOne, playerTwo))
                 {
-                    ChangeTurn(playerOne, playerTwo);
                     Message2 = "";
                     Screen.DisplayGameBoard(playerOne, playerTwo);
 
