@@ -36,7 +36,7 @@ namespace ConnectFour
         public override void PutAPiece(Player playerOne, Player playerTwo)
         {
 
-            int chosenColumn = int.Parse(Controller.validsColumns[r.Next(0, Controller.validsColumns.Count)]);
+            int chosenColumn = int.Parse(Controller.validsPlays[r.Next(0, Controller.validsPlays.Count)]);
             Controller.PutAPiece(chosenColumn, Controller.turn);
         }
 
@@ -95,8 +95,8 @@ namespace ConnectFour
 
         public override void PutAPiece(Player playerOne, Player playerTwo)
         {
-            int columnchosenColumn = Controller.ValidColumn(playerOne, playerTwo);
-            Controller.PutAPiece(columnchosenColumn, Controller.turn);
+            string playChoosen = Controller.ValidPlay(playerOne, playerTwo);
+            Controller.PutAPiece(int.Parse(playChoosen), Controller.turn);
 
         }
     }

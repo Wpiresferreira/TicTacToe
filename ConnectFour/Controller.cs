@@ -13,7 +13,7 @@ namespace ConnectFour
         public static string Message2 = "";
         public static Player starterPlayer;
         public static Player actualPlayer;
-        public static List<string> validsColumns = new List<string>(){"1", "2", "3", "4", "5", "6", "7"};
+        public static List<string> validsPlays = new List<string>();
 
         public static void Initialize()
         {
@@ -27,20 +27,22 @@ namespace ConnectFour
             {
                 SortFirstPlayer(playerOne, playerTwo);
                 GameBoard.InitializeGameBoard();
-                validsColumns.Clear();
-                validsColumns.Add("1");
-                validsColumns.Add("2");
-                validsColumns.Add("3");
-                validsColumns.Add("4");
-                validsColumns.Add("5");
-                validsColumns.Add("6");
-                validsColumns.Add("7");
+                validsPlays.Clear();
+                validsPlays.Add("11");
+                validsPlays.Add("12");
+                validsPlays.Add("13");
+                validsPlays.Add("21");
+                validsPlays.Add("22");
+                validsPlays.Add("23");
+                validsPlays.Add("31");
+                validsPlays.Add("32");
+                validsPlays.Add("33");
                 Message2 = "";
                 Screen.DisplayGameBoard(playerOne, playerTwo);
 
             while(true)
             {
-                UpdateValidsColumns();
+                UpdateValidsPlays();
                 Screen.DisplayGameBoard(playerOne, playerTwo);
                 actualPlayer.PutAPiece(playerOne, playerTwo);
                 Screen.DisplayGameBoard(playerOne, playerTwo);
@@ -77,12 +79,12 @@ namespace ConnectFour
                 {
                     case 1:
                         turn = "X";
-                        Message = $" Player {playerOne.playerName} will start! Choose a Column";
+                        Message = $" Player {playerOne.playerName} will start! Choose a row and column";
                         starterPlayer = actualPlayer = playerOne;
                         break;
                     case 2:
                         turn = "O";
-                        Message = $" Player {playerTwo.playerName} will start! Choose a Column";
+                        Message = $" Player {playerTwo.playerName} will start! Choose a row and column";
                         starterPlayer = actualPlayer = playerTwo;
                         break;
                 }
@@ -91,26 +93,29 @@ namespace ConnectFour
             else if (starterPlayer == playerOne)
             {
                 turn = "O";
-                Message = $" Player {playerTwo.playerName} will start! Choose a Column";
                 starterPlayer = actualPlayer = playerTwo;
 
             }
             else
             {
                 turn = "X";
-                Message = $" Player {playerOne.playerName} will start! Choose a Column";
                 starterPlayer = actualPlayer = playerOne;
             }
 
+            Message = $" Player {playerOne.playerName} will start! Choose a row and column";
+
         }
 
-        private static void UpdateValidsColumns()
+        private static void UpdateValidsPlays()
         {
-            for (int col =0; col<7; col++)
+            for (int row = 0; row < 3; row++)
             {
-                if (GameBoard.board[0,col] != " ")
+                for (int col = 0; col < 3; col++)
                 {
-                    validsColumns.Remove((col+1).ToString());
+                    if (GameBoard.board[row, col] != " ")
+                    {
+                        validsPlays.Remove((row + 1).ToString() + (col + 1).ToString());
+                    }
                 }
             }
         }
@@ -147,21 +152,21 @@ namespace ConnectFour
         private static bool CheckWinner(Player playerOne, Player playerTwo)
         {
 
-            string[] sRow = new string[6];
-            for (int row = 0; row <6; row++)
+            string[] sRow = new string[3];
+            for (int row = 0; row <3; row++)
             {
-                for(int col = 0; col < 7; col++)
+                for(int col = 0; col < 3; col++)
                 {
                     sRow[row] += GameBoard.board[row, col];
 
                 }
-                if (sRow[row].Contains("XXXX"))
+                if (sRow[row].Contains("XXX"))
                 {
                     Message = $"Congratulations {playerOne.playerName}. YOU WIN ! ! !";
                     playerOne.score++;
                     Screen.DisplayGameBoard(playerOne, playerTwo);
                     return true;
-                }else if (sRow[row].Contains("OOOO"))
+                }else if (sRow[row].Contains("OOO"))
                 {
                     Message = $"Congratulations {playerTwo.playerName}. YOU WIN ! ! !";
                     playerTwo.score++;
@@ -171,22 +176,22 @@ namespace ConnectFour
                 
             }
 
-            string[] sCol = new string[7];
-            for (int col = 0; col < 7; col++)
+            string[] sCol = new string[3];
+            for (int col = 0; col < 3; col++)
             {
-                for (int row = 0; row < 6; row++)
+                for (int row = 0; row < 3; row++)
                 {
                     sCol[col] += GameBoard.board[row, col];
 
                 }
-                if (sCol[col].Contains("XXXX"))
+                if (sCol[col].Contains("XXX"))
                 {
                     Message = $"Congratulations {playerOne.playerName}. YOU WIN ! ! !";
                     playerOne.score++;
                     Screen.DisplayGameBoard(playerOne, playerTwo);
                     return true;
                 }
-                else if (sCol[col].Contains("OOOO"))
+                else if (sCol[col].Contains("OOO"))
                 {
                     Message = $"Congratulations {playerTwo.playerName}. YOU WIN ! ! !";
                     playerTwo.score++;
@@ -196,51 +201,32 @@ namespace ConnectFour
 
             }
 
-            string[] sDiag1 = new string[6];
-            sDiag1[0] = GameBoard.board[2, 0] + GameBoard.board[3, 1] + GameBoard.board[4, 2] + GameBoard.board[5, 3];
-            sDiag1[1] = GameBoard.board[1, 0] + GameBoard.board[2, 1] + GameBoard.board[3, 2] + GameBoard.board[4, 3] + GameBoard.board[5, 4];
-            sDiag1[2] = GameBoard.board[0, 0] + GameBoard.board[1, 1] + GameBoard.board[2, 2] + GameBoard.board[3, 3] + GameBoard.board[4, 4] + GameBoard.board[5, 5];
-            sDiag1[3] = GameBoard.board[0, 1] + GameBoard.board[1, 2] + GameBoard.board[2, 3] + GameBoard.board[3, 4] + GameBoard.board[4, 5]+ GameBoard.board[5, 6];
-            sDiag1[4] = GameBoard.board[0, 2] + GameBoard.board[1, 3] + GameBoard.board[2, 4] + GameBoard.board[3, 5]+ GameBoard.board[4,6];
-            sDiag1[5] = GameBoard.board[0, 3] + GameBoard.board[1, 4] + GameBoard.board[2, 5] + GameBoard.board[3, 6];
+            string sDiag1 = GameBoard.board[0, 0] + GameBoard.board[1, 1] + GameBoard.board[2, 2];
 
-            for (int diag1 = 0; diag1 < 6; diag1++)
+            if (sDiag1.Contains("XXX"))
             {
-                if (sDiag1[diag1].Contains("XXXX"))
-                {
-                    Message = $"Congratulations {playerOne.playerName}. YOU WIN ! ! !";
-                    playerOne.score++;
-                    Screen.DisplayGameBoard(playerOne, playerTwo);
-                    return true;
-                }
-                else if (sDiag1[diag1].Contains("OOOO"))
-                {
-                    Message = $"Congratulations {playerTwo.playerName}. YOU WIN ! ! !";
-                    playerTwo.score++;
-                    Screen.DisplayGameBoard(playerOne, playerTwo);
-                    return true;
-                }
-
+                Message = $"Congratulations {playerOne.playerName}. YOU WIN ! ! !";
+                playerOne.score++;
+                Screen.DisplayGameBoard(playerOne, playerTwo);
+                return true;
             }
-
-            string[] sDiag2 = new string[6];
-            sDiag2[0] = GameBoard.board[0, 3] + GameBoard.board[1, 2] + GameBoard.board[2, 1] + GameBoard.board[3, 0];
-            sDiag2[1] = GameBoard.board[0, 4] + GameBoard.board[1, 3] + GameBoard.board[2, 2] + GameBoard.board[3, 1] + GameBoard.board[4, 0];
-            sDiag2[2] = GameBoard.board[0, 5] + GameBoard.board[1, 4] + GameBoard.board[2, 3] + GameBoard.board[3, 2] + GameBoard.board[4, 1] + GameBoard.board[5, 0];
-            sDiag2[3] = GameBoard.board[0, 6] + GameBoard.board[1, 5] + GameBoard.board[2, 4] + GameBoard.board[3, 3] + GameBoard.board[4, 2] + GameBoard.board[5, 1];
-            sDiag2[4] = GameBoard.board[1, 6] + GameBoard.board[2, 5] + GameBoard.board[3, 4] + GameBoard.board[4, 3] + GameBoard.board[5, 2];
-            sDiag2[5] = GameBoard.board[2, 6] + GameBoard.board[3, 5] + GameBoard.board[4, 4] + GameBoard.board[5, 3];
-
-            for (int diag2 = 0; diag2 < 6; diag2++)
+            else if (sDiag1.Contains("OOO"))
             {
-                if (sDiag2[diag2].Contains("XXXX"))
+                Message = $"Congratulations {playerTwo.playerName}. YOU WIN ! ! !";
+                playerTwo.score++;
+                Screen.DisplayGameBoard(playerOne, playerTwo);
+                return true;
+            }
+
+            string sDiag2 = GameBoard.board[0, 2] + GameBoard.board[1, 1] + GameBoard.board[2, 0];
+            if (sDiag2.Contains("XXX"))
                 {
                     Message = $"Congratulations {playerOne.playerName}. YOU WIN ! ! !";
                     playerOne.score++;
                     Screen.DisplayGameBoard(playerOne, playerTwo);
                     return true;
                 }
-                else if (sDiag2[diag2].Contains("OOOO"))
+                else if (sDiag2.Contains("OOO"))
                 {
                     Message = $"Congratulations {playerTwo.playerName}. YOU WIN ! ! !";
                     playerTwo.score++;
@@ -248,9 +234,9 @@ namespace ConnectFour
                     return true;
                 }
 
-            }
-
-            if (GameBoard.board[0, 0] != " " && GameBoard.board[0, 1] != " " && GameBoard.board[0, 2] != " " && GameBoard.board[0, 3] != " " && GameBoard.board[0, 4] != " " && GameBoard.board[0, 5] != " " && GameBoard.board[0, 6] != " ")
+            if (GameBoard.board[0, 0] != " " && GameBoard.board[0, 1] != " " && GameBoard.board[0, 2] != " " &&
+                GameBoard.board[1, 0] != " " && GameBoard.board[1, 1] != " " && GameBoard.board[1, 2] != " " &&
+                GameBoard.board[2, 0] != " " && GameBoard.board[2, 1] != " " && GameBoard.board[2, 2] != " ")
             {
                 Message = $"The game ended in a draw";
                 playerOne.score++;
@@ -263,30 +249,40 @@ namespace ConnectFour
         }
 
 
-        public static int ValidColumn(Player playerOne, Player playerTwo)
+        public static string ValidPlay(Player playerOne, Player playerTwo)
         {
             if(actualPlayer is ComputerPlayer)
             {
                 while (true)
                 {
+                    int x;
                     Random r = new Random();
-                    int randomColumn = r.Next(1, 8);
-
+                    int randomPlay = r.Next(1, 4);
+                    x = randomPlay * 10;
+                    randomPlay = r.Next(1, 4);
+                    x += randomPlay;
+                    if (validsPlays.Any(p => p == x.ToString()))
+                    {
+                        Message2 = "";
+                        return x.ToString();
+                    }
                 }
 
             }
 
 
 
-            while(true) {
+            while (true) {
                 string userCommand = Console.ReadKey().KeyChar.ToString();
-                if (validsColumns.Any(p => p == userCommand)){
+                userCommand += Console.ReadKey().KeyChar.ToString();
+
+                if (validsPlays.Any(p => p == userCommand)){
                     Message2 = "";
-                    return int.Parse(userCommand);
+                    return userCommand;
                 }
                 else
                 {
-                    Message2 = "Invalid Column. Try again";
+                    Message2 = "Invalid Play. Try again";
                     Screen.DisplayGameBoard(playerOne, playerTwo);
                 }
             
@@ -295,14 +291,10 @@ namespace ConnectFour
 
         public static void PutAPiece(int n, string turn)
         {
-            for (int i = 5; i >= 0; i--)
-            {
-                if (GameBoard.board[i, n - 1] == " ")
-                {
-                    GameBoard.board[i, n - 1] = turn;
-                    return;
-                }
-            }
+            int row = n/10 - 1;
+            int col = n - 10 * (row + 1)-1;
+            GameBoard.board[row, col] = turn;
+                       
         }
 
         private static void ChangeTurn(Player playerOne, Player playerTwo)
@@ -311,7 +303,7 @@ namespace ConnectFour
             {
                 actualPlayer = playerOne;
                 turn = "X";
-                Message = $"It's {actualPlayer.playerName} turn. Choose a column number:";
+                Message = $"It's {actualPlayer.playerName} turn. Choose a row and column number:";
                 Screen.DisplayGameBoard(playerOne, playerTwo);
 
             }
@@ -319,7 +311,7 @@ namespace ConnectFour
             {
                 actualPlayer = playerTwo;
                 turn = "O";
-                Message = $"It's {actualPlayer.playerName} turn. Choose a column number:";
+                Message = $"It's {actualPlayer.playerName} turn. Choose a row and column number:";
                 Screen.DisplayGameBoard(playerOne, playerTwo);
 
             }

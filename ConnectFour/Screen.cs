@@ -14,7 +14,7 @@ namespace ConnectFour
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("████████████████████████████████████████████████████████████");
             Console.WriteLine("███                                                      ███");
-            Console.WriteLine("███             Welcome to Connect Four Game             ███");
+            Console.WriteLine("███             Welcome to Tic Tac Toe Game              ███");
             Console.WriteLine("███                                                      ███");
             Console.WriteLine("████████████████████████████████████████████████████████████");
             Console.WriteLine("███                                                      ███");
@@ -72,7 +72,7 @@ namespace ConnectFour
             Console.WriteLine($"███ {one,-15}                      {two,15} ███");
             Console.Write($"███ Token: ");
             Token("X");
-            Console.Write("          Connect Four Game         Token: ");
+            Console.Write("          Tic Tac Toe Game          Token: ");
             Token("O");
             Console.Write(" ███\n");
             Console.WriteLine($"███ Wins: {one.score,2}                                    Wins: {two.score,2} ███");
@@ -84,27 +84,27 @@ namespace ConnectFour
             Console.WriteLine($"███                                                      ███");
             Console.WriteLine($"███{Controller.Message,-52}  ███");
             Console.WriteLine($"███                                                      ███");
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (i == 0)
                 {
-                    Console.WriteLine("███              1   2   3   4   5   6   7               ███");
-                    Console.WriteLine("███            ╔═══╦═══╦═══╦═══╦═══╦═══╦═══╗             ███");
+                    Console.WriteLine("███              1   2   3                               ███");
+                    Console.WriteLine("███            ╔═══╦═══╦═══╗                             ███");
                 }
-                Console.Write("███            ║ ");
-                for (int j = 0; j < 7; j++)
+                Console.Write($"███          {i+1} ║ ");
+                for (int j = 0; j < 3; j++)
                 {
                     Token(GameBoard.board[i, j]);
                     Console.Write(" ║ ");
                 }
-                Console.Write("            ███\n");
-                if (i != 5)
+                Console.Write("                            ███\n");
+                if (i != 2)
                 {
-                    Console.WriteLine("███            ╠═══╬═══╬═══╬═══╬═══╬═══╬═══╣             ███");
+                    Console.WriteLine("███            ╠═══╬═══╬═══╣                             ███");
                 }
                 else
                 {
-                    Console.WriteLine("███            ╚═══╩═══╩═══╩═══╩═══╩═══╩═══╝             ███");
+                    Console.WriteLine("███            ╚═══╩═══╩═══╝                             ███");
                 }
             }
             Console.WriteLine($"███                                                      ███");
@@ -126,7 +126,7 @@ namespace ConnectFour
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("████████████████████████████████████████████████████████████");
             Console.WriteLine("███                                                      ███");
-            Console.WriteLine("███             Welcome to Connect Four Game             ███");
+            Console.WriteLine("███             Welcome to Tic Tac Toe Game              ███");
             Console.WriteLine("███                                                      ███");
             Console.WriteLine("████████████████████████████████████████████████████████████");
             Console.WriteLine("███                                                      ███");
@@ -143,20 +143,20 @@ namespace ConnectFour
             Console.Clear();
             Console.WriteLine("████████████████████████████████████████████████████████████");
             Console.WriteLine("███                                                      ███");
-            Console.WriteLine("███                  About Connect Four                  ███");
+            Console.WriteLine("███                  About Tic Tac Toe                   ███");
             Console.WriteLine("███                                                      ███");
             Console.WriteLine("████████████████████████████████████████████████████████████");
             Console.WriteLine("███                                                      ███");
-            Console.WriteLine("███  Connect Four  is a two-player connection rack game, ███");
-            Console.WriteLine("███  in which the players choose a color (or symbol)     ███");
-            Console.WriteLine("███  and then take turns dropping colored tokens into a  ███");
-            Console.WriteLine("███  six-row, seven-column vertically suspended grid.    ███");
+            Console.WriteLine("███  Tic Tac Toes is a paper-and-pencil game for two     ███");
+            Console.WriteLine("███  players who take turns marking the spaces in a      ███");
+            Console.WriteLine("███  three-by-three grid with X or O. The player who     ███");
+            Console.WriteLine("███  succeeds in placing three of their marks in a       ███");
+            Console.WriteLine("███    horizontal,                                       ███");
+            Console.WriteLine("███    vertical, or                                      ███");
+            Console.WriteLine("███    diagonal                                          ███");
+            Console.WriteLine("███  row is the winner.                                  ███");
             Console.WriteLine("███                                                      ███");
-            Console.WriteLine("███  The pieces fall straight down, occupying the lowest ███");
-            Console.WriteLine("███  available space within the column. The objective of ███");
-            Console.WriteLine("███  the game is to be the first to form a horizontal,   ███");
-            Console.WriteLine("███  vertical, or diagonal line of four of one's own     ███");
-            Console.WriteLine("███  tokens.                                             ███");
+            Console.WriteLine("███                                                      ███");
             Console.WriteLine("███                                                      ███");
             Console.WriteLine("███                            source:wikipedia.org      ███");
             Console.WriteLine("████████████████████████████████████████████████████████████");

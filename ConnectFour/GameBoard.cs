@@ -4,7 +4,7 @@ namespace ConnectFour
 {
     public static class GameBoard
     {
-        public static string[,] board = new string[6, 7];
+        public static string[,] board = new string[3, 3];
         
         public static void InitializeGameBoard()
         {
